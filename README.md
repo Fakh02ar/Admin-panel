@@ -1,6 +1,6 @@
 # Admin Panel Application
 
-A full-featured admin panel built with Next.js 14, Express.js, and MongoDB.
+A full-featured admin panel built with Next.js 14 and MongoDB, deployed on Vercel.
 
 ## Features
 
@@ -15,9 +15,10 @@ A full-featured admin panel built with Next.js 14, Express.js, and MongoDB.
 - CRUD operations for Users, Products, and Categories
 - Form validation (client-side)
 - Loading states and empty states
+- Image upload functionality
 
 ### Backend
-- Express.js REST API
+- Next.js API Routes (serverless)
 - MongoDB with Mongoose ODM
 - JWT authentication
 - Password hashing with bcrypt
@@ -25,17 +26,43 @@ A full-featured admin panel built with Next.js 14, Express.js, and MongoDB.
 - Comprehensive API endpoints
 - Error handling middleware
 
-## Getting Started
+## Deployment on Vercel
 
 ### Prerequisites
-- Node.js 18+ installed
-- MongoDB instance (local or cloud)
+- Vercel account
+- MongoDB Atlas account (or any MongoDB instance)
 
-### Backend Setup
+### Environment Variables
 
-1. Navigate to the backend directory:
+Set these environment variables in your Vercel project:
+
 ```bash
-cd backend
+MONGODB_URI=mongodb+srv://username:password@cluster.mongodb.net/admin_panel_db?retryWrites=true&w=majority
+JWT_SECRET=your_super_secret_jwt_key_here
+```
+
+### Deployment Steps
+
+1. **Connect to GitHub:**
+   - Push your code to a GitHub repository
+   - Connect your Vercel account to GitHub
+
+2. **Deploy:**
+   - Import your GitHub repository in Vercel
+   - Vercel will automatically detect it's a Next.js project
+   - Add the environment variables in Vercel dashboard
+   - Deploy!
+
+3. **Database Setup:**
+   - The application will automatically connect to MongoDB
+   - Run the seed script if needed (optional)
+
+### Local Development
+
+1. Clone the repository:
+```bash
+git clone <your-repo-url>
+cd admin-panel-application
 ```
 
 2. Install dependencies:
@@ -43,9 +70,96 @@ cd backend
 npm install
 ```
 
-3. Create a `.env` file:
+3. Create `.env.local` file:
 ```bash
-cp .env.example .env
+MONGODB_URI=your_mongodb_connection_string
+JWT_SECRET=your_jwt_secret
+```
+
+4. Run the development server:
+```bash
+npm run dev
+```
+
+5. Open [http://localhost:3000](http://localhost:3000) in your browser
+
+## API Endpoints
+
+### Authentication
+- `POST /api/auth/register` - Register new admin user
+- `POST /api/auth/login` - Login user
+
+### Users (Admin only)
+- `GET /api/users` - Get all users with pagination/search
+- `POST /api/users` - Create new user
+- `PUT /api/users/[id]` - Update user
+- `DELETE /api/users/[id]` - Delete user
+
+### Categories (Admin only)
+- `GET /api/categories` - Get all categories
+- `POST /api/categories` - Create category
+
+### Products (Admin only)
+- `GET /api/products` - Get all products with pagination/search
+- `POST /api/products` - Create product
+- `PUT /api/products/[id]` - Update product
+- `DELETE /api/products/[id]` - Delete product
+
+### File Upload
+- `POST /api/upload` - Upload product images
+
+### Health Check
+- `GET /api/health` - Server health check
+
+## Usage
+
+1. **Register/Login:**
+   - First user registration creates an admin account
+   - Use admin credentials to login
+
+2. **Dashboard:**
+   - View statistics and manage data
+   - Navigate between Users, Products, and Categories
+
+3. **CRUD Operations:**
+   - Create, read, update, and delete records
+   - Upload product images
+   - Search and filter data
+
+## Technologies Used
+
+- **Frontend:** Next.js 14, React 19, Tailwind CSS, Radix UI
+- **Backend:** Next.js API Routes, MongoDB, Mongoose
+- **Authentication:** JWT, bcrypt
+- **Deployment:** Vercel
+- **Styling:** Tailwind CSS, shadcn/ui components
+
+## Project Structure
+
+```
+admin-panel-application/
+├── app/                    # Next.js app directory
+│   ├── api/               # API routes
+│   ├── dashboard/         # Dashboard pages
+│   ├── login/            # Login page
+│   └── globals.css       # Global styles
+├── components/            # React components
+├── lib/                   # Utility functions and models
+├── public/               # Static assets
+└── package.json          # Dependencies
+```
+
+## Contributing
+
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Test thoroughly
+5. Submit a pull request
+
+## License
+
+This project is licensed under the MIT License.
 ```
 
 4. Update the `.env` file with your MongoDB connection string:
