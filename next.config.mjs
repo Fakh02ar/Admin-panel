@@ -5,11 +5,15 @@ const nextConfig = {
   },
   images: {
     unoptimized: true,
-    domains: ['fakhar.x2uzrja.mongodb.net'], // Add your MongoDB Atlas domain if needed
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'fakhar.x2uzrja.mongodb.net',
+      },
+    ],
   },
-  experimental: {
-    serverComponentsExternalPackages: ['mongoose'],
-  },
+  // Use serverExternalPackages for server-only external packages like mongoose
+  serverExternalPackages: ['mongoose'],
   env: {
     MONGODB_URI: process.env.MONGODB_URI,
     JWT_SECRET: process.env.JWT_SECRET,

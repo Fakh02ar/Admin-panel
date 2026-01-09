@@ -1,6 +1,7 @@
 import { writeFile, mkdir } from "fs/promises"
 import { join } from "path"
 import { randomUUID } from "crypto"
+import jwt from "jsonwebtoken"
 
 // Middleware functions adapted for Next.js
 function authMiddleware(request) {
@@ -12,8 +13,7 @@ function authMiddleware(request) {
   }
 
   try {
-    const jwt = require("jsonwebtoken")
-    const decoded = jwt.verify(token, process.env.JWT_SECRET)
+    const decoded = jwt.verify(token, process.env.JWT_SECRET || "demo_secret_key")
     request.user = decoded
   } catch (error) {
     throw new Error("Invalid or expired token.")
